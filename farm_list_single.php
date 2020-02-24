@@ -1,0 +1,737 @@
+<?php
+
+session_start();
+include('connection.php');
+if(!isset($_SESSION['username'])){
+    header('location:index.php');
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Cagro Information System</title>
+
+    <!-- ================= Favicon ================== -->
+    <!-- Standard -->
+    <link type="image/x-icon" href="assets/images/cagro5.png" rel="shortcut icon">
+    
+    
+
+    <!-- Common -->
+    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/lib/menubar/sidebar.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/lib/helper.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- Datatable -->
+    <link href="assets/css/jquery-ui.css" rel="stylesheet" />
+    <link href="assets/css/morris.css" rel="stylesheet" />
+    <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/buttons.dataTables.min.css" rel="stylesheet" />
+    
+    <style>
+        .back{
+            background:skyblue;
+        }
+        .form-control{
+            border-color:black;
+        }
+    </style>
+    
+</head>
+
+<body>
+
+<div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
+            <div class="nano">
+                <div class="nano-content">
+                    <ul>
+                        <div class="logo"><a href="index.html"><img src="assets/images/cagro1.png" alt="" /><span>CAGRO</span></a></div>
+                        <li class="label">Home</li>
+                        <li><a href="dashboard.php"><i class="ti-home"></i>Dashboard</a></li>
+                        <li><a href="secretary.php"><i class="ti-user"></i>Beneficiaries</a></li>
+                        <li><a href="recent_request.php"><i class="ti-bell"></i>Requests</a></li>
+                        <li><a class="sidebar-sub-toggle"><i class="ti-panel"></i> Records <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                            <ul>
+                            <li><a href="planning_agrisupplies.php"><i class="ti-folder"></i>Agri Supplies</a></li>
+                            <li><a href="planning_technical_assistance.php"><i class="ti-folder"></i>Technical Assistance</a></li>
+                            <li><a href="planning_farm_mechanization.php"><i class="ti-folder"></i>Farm Mechanization</a></li>
+                            <li><a href="planning_other_assistance.php"><i class="ti-folder"></i>Other Assistance</a></li>
+                            </ul>
+                        </li>
+                        <li class="label">Events</li>
+                        <li><a href="project_programs.php"><i class="ti-calendar"></i>Projects and Programs</a></li>
+                        <li class="label">Reports</li>
+                        <li><a href="ongoing_bene_record__secretary.php"><i class="ti-folder"></i>Beneficiary Reports</a></li>
+                        <li><a href="transaction_report_secretary.php"><i class="ti-folder"></i>Transaction Report</a></li>
+                        <li><a href="feedback_report_secretary.php"><i class="ti-folder"></i>Feedback Report</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <!-- /# sidebar -->
+
+
+    <div class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="float-left">
+                        <h4 id="datetime"></h4>
+                        <h5 id="time"></h5>
+                    </div>
+                    <div class="float-right">
+                        <div class="dropdown dib">
+                            <div class="header-icon" data-toggle="dropdown">
+                                <?php 
+                                    $count;
+                                    if($statement3 = $connection->prepare('SELECT COUNT(title) as num from notification WHERE event_status="Unread"')){
+                                        $statement3->execute();
+                                        $result3 = $statement3->fetchAll();
+                                        foreach($result3 as $row3)
+                                        {
+                                            $count=$row3['num'];
+                                        }
+                                    }
+                                
+                                ?>
+                                <i class="ti-alarm-clock"></i><span style="color:red;font-size:12px;"><b><?php 
+                                if($count==0){
+                                    echo "";
+                                }else{
+                                echo $count; 
+                                }
+                                
+                                ?></b></span>
+                                <div class="drop-down dropdown-menu dropdown-menu-right">
+                                    <div class="dropdown-content-heading">
+                                        <span class="text-left">Recent Notifications</span>
+                                    </div>
+                                    <div class="dropdown-content-body">
+                                        <ul>
+
+                                        <?php 
+                                        
+                                            if($statement4 = $connection->prepare('SELECT * from notification order by start_event desc limit 3')){
+                                                $statement4->execute();
+                                                $result4 = $statement4->fetchAll();
+                                                
+                                                if(!empty($result4)){
+
+                                                
+
+                                                foreach($result4 as $row4)
+                                                {
+                                                 
+                                        
+                                        ?>
+
+                                            <li>
+                                                <a >
+                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/notif.png" alt="" />
+                                                    <div class="notification-content">
+                                                        <small class="notification-timestamp pull-right"><?php echo $row4['event_status'] ?></small>
+                                                        <div class="notification-heading"><?php echo $row4['title'] ?></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        <?php 
+                                        
+                                            }
+
+                                            echo '<li class="text-center">
+                                            <a href="#" id="view_notif" class="more-link">See All</a>
+                                        </li>';
+                                        }else{
+                                            echo '<li class="text-center">
+                                            <a href="#" >No Nofication</a>
+                                                </li>';
+                                        }
+                                    }
+                                        
+                                        
+                                        ?>
+                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                        <div class="dropdown dib">
+                            <div class="header-icon" data-toggle="dropdown">
+                                <span class="user-avatar"><?php echo $_SESSION["username"]; ?>
+                                    <i class="ti-angle-down f-s-10"></i>
+                                </span>
+                                <div class="drop-down dropdown-profile dropdown-menu dropdown-menu-right">
+                              
+                                    <div class="dropdown-content-body">
+                                        <ul>
+                                            <li>
+                                                <a id="profile">
+                                                    <i class="ti-user"></i>
+                                                    <span>Profile</span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a id="setting">
+                                                    <i class="ti-settings"></i>
+                                                    <span>Setting</span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a id="logout">
+                                                    <i class="ti-power-off"></i>
+                                                    <span>Logout</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+               
+                <!-- /# row -->
+
+                <div class="row">
+                            <!-- /# column -->
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <h3>Farm Mechanization Requests</h3><br>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <h4><?php echo $_SESSION['name']; ?></h4><p>Request List</p>
+                                            </div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-3">
+                                                <div align="right">
+                                                    <button type="button" id="close_button" class="btn btn-secondary ti-back-left btn-sm"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table id="user_data" class="table table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Farm Site</th>
+                                                        <th>Coordinate</th>
+                                                        <th>Tentative Schedule</th>
+                                                        <th>Status</th>
+                                                        <th>Date Requested</th>
+                                                        <th width="8%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="footer">
+                                    <p>2019 © DAVAO DEL NORTE STATE COLLEGE - INSTITUTE OF INFORMATION TECHNOLOGY. - <a href="www.dnsc.edu.ph">www.dnsc.edu.ph</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        
+        <div id="userModal" class="modal fade" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog">
+                <form method="post" id="assistance_form">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Beneficiary</h4>
+                            <b><button type="button" class="close" data-dismiss="modal"><span class="ti-close"></span></button></b>
+                        </div>
+                        <div class="modal-body">
+                           <div class="form-group">
+                                <label>Farm Site:</label>
+                                <input type="text" name="farm" id="farm" class="form-control">
+                           </div>
+                           <div class="form-group">
+                                <label>Coordinates:</label>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <input type="text" name="coor" id="coor" class="form-control">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary ti-eye" id="showMap" type="button" data-toggle="modal" data-target="#userModal4"></button>
+                                    </div>
+                                </div>
+                           </div>
+                           <div class="form-group">
+                                <label>Tentative Schedule:</label>
+                                <input type="date" name="sched" id="sched" class="form-control">
+                           </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="user_id" id="user_id" />
+                            <input type="button" id="updatestat" class="btn btn-warning" value="Save and Print Request" />
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="userModal2" class="modal fade" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog">
+                <form method="post" id="assistance_form2">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Beneficiary</h4>
+                            <b><button type="button" class="close" data-dismiss="modal"><span class="ti-close"></span></button></b>
+                        </div>
+                        <div class="modal-body">
+                           <div class="form-group oper">
+                                <label>Operation:</label>
+                                <input type="text" name="operation" id="operation" class="form-control">
+                           </div>
+                           <div class="form-group date_s">
+                                <label>Date Started:</label>
+                                <input type="date" name="date_s" id="date_s" class="form-control">
+                           </div>
+                           <div class="form-group date_e">
+                                <label>Date Ended:</label>
+                                <input type="date" name="date_e" id="date_e" class="form-control">
+                           </div>
+                           <div class="form-group area">
+                                <label>Area to be serve:</label>
+                                <input type="text" name="area" id="area" class="form-control">
+                           </div>
+                           <div class="form-group per">
+                                <label>Name of Operator:</label>
+                                <input type="text" name="operator" id="operator" class="form-control">
+                           </div>
+                           <div class="form-group">
+                                <label>Remarks:</label>
+                                <select name="stat" id="stat" class="form-control">
+                                    <option value="On Going">On Going</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Done">Done</option>
+                                </select>
+                           </div>
+                           <div class="form-group res">
+                                <label>Reschedule on:</label>
+                                <input type="date" id="resched" name="resched" class="form-control">
+                                <label>Reasons:</label>
+                                <textarea name="reason" id="reason" class="form-control" cols="30" rows="10"></textarea>
+                           </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="user_id2" id="user_id2" />
+                            <input type="button" id="updatestat2" class="btn btn-warning" value="Save" />
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="userModal3" class="modal fade" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog">
+                <form method="post" id="assistance_form2">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Update Beneficiary</h4>
+                            <b><button type="button" class="close" data-dismiss="modal"><span class="ti-close"></span></button></b>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Operation:</label>
+                                        <input type="text" name="operation2" id="operation2" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                            <label>Date Started:</label>
+                                            <input type="date" name="date_s2" id="date_s2" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Date Ended:</label>
+                                        <input type="date" name="date_e2" id="date_e2" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Area to be serve:</label>
+                                        <input type="text" name="area2" id="area2" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                           
+                           
+                           <div class="form-group">
+                                <label>Name of Operator:</label>
+                                <input type="text" name="operator2" id="operator2" class="form-control">
+                           </div>
+                           <div class="form-group">
+                                <label>Remarks:</label>
+                                <select name="stat2" id="stat2" class="form-control">
+                                    <option value="On Going">On Going</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Done">Done</option>
+                                </select>
+                           </div>
+                           <div class="form-group">
+                                <label>Reschedule on:</label>
+                                <input type="date" id="resched2" name="resched2" class="form-control">
+                                <label>Reasons:</label>
+                                <textarea name="reason2" id="reason2" class="form-control" cols="30" rows="10"></textarea>
+                           </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="user_id3" id="user_id2" />
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="userModal4" class="modal fade" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog">
+                <form method="post" id="assistance_form2">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Map</h4>
+                            <b><button type="button" class="close" data-dismiss="modal"><span class="ti-close"></span></button></b>
+                        </div>
+                        <div class="modal-body">
+                            <div id="googleMap" style="width:470px;height:380px;"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Latitude  :<input type="text" size="20" maxlength="50" name="displayLat" class="form-control" id="displayLat" value=""><br />
+                                </div>
+                                <div class="col-md-6">
+                                Longitude :<input type="text" size="20" maxlength="50" name="displayLong" class="form-control" id="displayLong"><br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="subCoor" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+    <!-- Common -->
+    
+    
+
+</body>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/morris.min.js"></script>
+    <script src="js/raphael-min.js"></script>
+    <script src="assets/js/lib/bootstrap.min.js"></script>
+    <script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+    <script src="assets/js/lib/menubar/sidebar.js"></script>
+    <script src="assets/js/lib/preloader/pace.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false">
+</script>
+    
+
+</html>
+
+<script>
+$(document).ready(function(){
+    var interval=setInterval(function(){
+        var momentNow=new moment();
+        $('#datetime').html(momentNow.format('MMMM DD, YYYY')+' '+momentNow.format('dddd').substring(0,3).toUpperCase());
+        $('#time').html(momentNow.format('A hh:mm:ss'));
+   },100);
+    
+    var dataTable = $('#user_data').DataTable({
+    "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+    "processing":true,
+    "serverSide":true,
+    "order":[],
+    "ajax":{
+        url:"fetch_farm_mechanization_single.php",
+        type:"POST"
+    },
+    "columnDefs":[
+        {
+            "targets":[0, 3, 3],
+            "orderable":false,
+        },
+    ],
+
+    });
+    $('.res').hide();
+
+    $(document).on('click', '.check', function(){
+		var user_id = $(this).attr("id");
+        $.ajax({
+			url:"fetch_single_farmmechanic.php",
+			method:"POST",
+			data:{user_id:user_id},
+			dataType:"json",
+			success:function(data)
+			{
+				$('#farm').val(data.farm);
+                $('#coor').val(data.coor);
+                $('#sched').val(data.sched);
+                $('#user_id').val(user_id);
+			}
+		});
+	});
+
+    $(document).on('click','#subCoor',function(){
+        var coor='';
+        coor=$('#displayLat').val() +', '+$('#displayLong').val();
+        $('#coor').val(coor);
+        $('#userModal4').modal('hide');
+    });
+
+    $(document).on('click', '.showrecord', function(){
+		var user_id = $(this).attr("id");
+        $.ajax({
+			url:"fetch_single_farmmechanic2.php",
+			method:"POST",
+			data:{user_id:user_id},
+			dataType:"json",
+			success:function(data)
+			{
+				$('#operation2').val(data.operation);
+                $('#date_s2').val(data.date_started);
+                $('#date_e2').val(data.date_ended);
+                $('#area2').val(data.area);
+                $('#operator2').val(data.operator);
+                $('#stat2').val(data.status);
+                $('#resched2').val(data.resched);
+                $('#reason2').val(data.reason);
+                $('#userModal3').modal('show');
+			}
+		});
+	});
+
+    $(document).on('click', '.show_update', function(){
+		var user_id = $(this).attr("id");
+        $.ajax({
+			url:"fetch_single_farmmechanic2.php",
+			method:"POST",
+			data:{user_id:user_id},
+			dataType:"json",
+			success:function(data)
+			{
+                if(data.farm!=''){
+                    if(data.status!='Pending'){
+                        $('.per').show();
+                        $('.res').hide();
+                        $('.oper').show();
+                        $('.date_s').show();
+                        $('.date_e').show();
+                        $('.area').show();
+                        $('#operation').val(data.operation);
+                        $('#date_s').val(data.date_started);
+                        $('#date_e').val(data.date_ended);
+                        $('#area').val(data.area);
+                        $('#operator').val(data.operator);
+                        $('#stat').val(data.status);
+                        $('#user_id2').val(user_id);
+                        $('#userModal2').modal('show');
+                    }else{
+                        $('.oper').hide();
+                        $('.date_s').hide();
+                        $('.date_e').hide();
+                        $('.area').hide();
+                        $('.per').hide();
+                        $('.res').show();
+                        $('#stat').val(data.status);
+                        $('#resched').val(data.resched);
+                        $('#reason').val(data.reason);
+                        $('#user_id2').val(user_id);
+                        $('#userModal2').modal('show');
+                    }
+                    
+                }else{
+                    alert('Please Update first the beneficiary Information! Click the edit button.');
+                }
+               
+			}
+		});
+	});
+
+    $(document).on('change','#stat',function(){
+        var stat=$('#stat').val();
+        if(stat=='Pending'){
+            $('.oper').hide();
+            $('.date_s').hide();
+            $('.date_e').hide();
+            $('.area').hide();
+            $('.per').hide();
+            $('.res').show();
+        }else{
+            $('.per').show();
+            $('.res').hide();
+            $('.oper').show();
+            $('.date_s').show();
+            $('.date_e').show();
+            $('.area').show();
+        }
+    });
+
+    $(document).on('click', '#updatestat', function(){
+		var user_id = $('#user_id').val();
+        var farm=$('#farm').val();
+        var coor=$('#coor').val();
+        var sched=$('#sched').val();
+
+            if(farm!=''&& sched!=''&&coor!=''){
+                $.ajax({
+                    url:"update_status_farm.php",
+                    method:"POST",
+                    data:{user_id:user_id,farm:farm,coor:coor,sched:sched},
+                    success:function(data)
+                    {
+                        alert(data);
+                        $('#userModal').modal('hide');
+                        dataTable.ajax.reload();
+                        window.open('print_requestform_farm.php');
+                    }
+                })
+            }else{
+                alert("fields are required");
+            }
+		
+	});
+    $(document).on('click', '#updatestat2', function(){
+		var user_id = $('#user_id2').val();
+        var operation=$('#operation').val();
+        var date_s=$('#date_s').val();
+        var date_e=$('#date_e').val();
+        var area=$('#area').val();
+        var operator=$('#operator').val();
+        var stat=$('#stat').val();
+        var resched=$('#resched').val();
+        var reason=$('#reason').val();
+
+        if(stat!='Pending'){
+            if(operation!='' && date_s!='' && date_e!='' && area!='' && operator!='' && stat!=''){
+                $.ajax({
+                    url:"update_status_farm2.php",
+                    method:"POST",
+                    data:{user_id:user_id,operation:operation,date_s:date_s,date_e:date_e,
+                    area:area,operator:operator,stat:stat},
+                    success:function(data)
+                    {
+                        alert(data);
+                        $('#userModal2').modal('hide');
+                        dataTable.ajax.reload();
+                    }
+                });
+            }else{
+                alert('Some field are required!');
+            }
+        }else{
+            if(resched!=''&&reason!=''){
+                $.ajax({
+                    url:"update_status_farm3.php",
+                    method:"POST",
+                    data:{user_id:user_id,resched:resched,reason:reason,stat:stat},
+                    success:function(data)
+                    {
+                        alert(data);
+                        $('#userModal2').modal('hide');
+                        dataTable.ajax.reload();
+                    }
+                });
+            }else{
+                alert('Some field are required!');
+            }
+        }
+
+	});
+
+    $('#close_button').click(function(){
+        document.location.href="planning_farm_mechanization.php";
+    });
+
+
+    $('#logout').click(function(){
+        document.location.href="logout.php";
+    });
+    $('#profile').click(function(){
+        document.location.href="profile_secretary.php";
+    });
+    $('#setting').click(function(){
+        document.location.href="setting.php";
+    });
+    $('#view_notif').click(function(){
+        document.location.href="notification_table.php";
+    });
+
+});
+
+       
+function initialize()
+    {
+    var mapProp = {
+    center:new google.maps.LatLng(7.448212,125.809425),  
+    zoom:12,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap")
+    ,mapProp);
+
+    citMarker=new google.maps.Marker({
+    position:new google.maps.LatLng(7.448212,125.809425),
+    animation:google.maps.Animation.BOUNCE
+    });
+
+    google.maps.event.addListener(map, 'rightclick', function(event) {
+    document.getElementById('displayLat').value = event.latLng.lat();
+    document.getElementById('displayLong').value = event.latLng.lng();
+    placeMarker(event.latLng);
+    });
+
+   
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
