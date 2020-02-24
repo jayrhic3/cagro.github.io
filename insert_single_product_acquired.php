@@ -45,6 +45,6 @@ foreach($arr2 as $index=>$value){
         }
     }
 */
-echo json_encode("Succesfully Added Product!");
+echo json_encode("Product Succesfully Added!");
 
 ?>

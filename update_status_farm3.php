@@ -19,9 +19,9 @@ session_start();
 
 		if(!empty($result2))
 		{
-			echo 'Succesfully Updated';
+			echo 'Updated Succesfully';
 		}else{
-			echo "wrong";
+			echo "Unsuccessful!";
 		}
 	
 ?>
