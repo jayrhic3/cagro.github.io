@@ -68,7 +68,7 @@ if(!isset($_SESSION['username'])){
                         <li class="label">Home</li>
                         <li><a href="dashboard.php"><i class="ti-home"></i>Dashboard</a></li>
                         <li><a href="secretary.php"><i class="ti-user"></i>Beneficiaries</a></li>
-                        <li><a href="recent_request.php"><i class="ti-bell"></i>Requests</a></li>
+                        <li class="active"><a href="recent_request.php"><i class="ti-bell"></i>Requests</a></li>
                         <li><a class="sidebar-sub-toggle"><i class="ti-panel"></i> Records <span class="sidebar-collapse-icon ti-angle-down"></span></a>
                             <ul>
                             <li><a href="planning_agrisupplies.php"><i class="ti-folder"></i>Agri Supplies</a></li>
@@ -181,7 +181,7 @@ if(!isset($_SESSION['username'])){
                         
                         <div class="dropdown dib">
                             <div class="header-icon" data-toggle="dropdown">
-                                <span class="user-avatar"><?php echo $_SESSION["username"]; ?>
+                                <span class="user-avatar">Hi, <?php echo $_SESSION["username"]; ?>
                                     <i class="ti-angle-down f-s-10"></i>
                                 </span>
                                 <div class="drop-down dropdown-profile dropdown-menu dropdown-menu-right">
@@ -231,14 +231,18 @@ if(!isset($_SESSION['username'])){
                             <!-- /# column -->
                             <div class="col-md-12">
                                 <div class="card">
+                                <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="recent_request.php" class="text-primary">Requests List</a></li>
+                                            <li class="breadcrumb-item active"><a>Requests - <?php echo $_SESSION['name']; ?></a></li>
+                                        </ol>
+                                    </nav>
                                    <div class="card-body">
-                                   <h3>Requests</h3>
                                    <div class="row">
                                         <div class="col-lg-12"  id="ongoing_table">
-                                        <h4><?php echo $_SESSION['name']; ?></h4><p>Request List</p>
-                                        <div align="right">
-                                            <button type="button" id="close_button" class="btn btn-secondary ti-back-left btn-sm"></button>
-                                        </div><br>
+                                            <h3>Requests - <?php echo $_SESSION['name']; ?></h3>
+                                            <button type="button" id="close_button" class="btn btn-secondary ti-back-left btn-sm float-right"> Back to Requests</button>
+                                        <br><hr><br>
                                                 <table id="user_data" class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr>

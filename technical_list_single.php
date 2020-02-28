@@ -219,20 +219,20 @@ if(!isset($_SESSION['username'])){
                             <!-- /# column -->
                             <div class="col-md-12">
                                 <div class="card">
+                                <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="planning_technical_assistance.php" class="text-primary">Technical Assistance Requests List</a></li>
+                                            <li class="breadcrumb-item active"><a>Technical Assistance Requests - <?php echo $_SESSION['name']; ?></h4></a></li>
+                                        </ol>
+                                    </nav>
                                     <div class="card-body">
-                                    <h3>Technical Requests</h3><br>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <h4><?php echo $_SESSION['name']; ?></h4><p>Request List</p>
-                                            </div>
-                                            <div class="col-md-6"></div>
-                                            <div class="col-md-3">
-                                                <div align="right">
-                                                    <button type="button" id="close_button" class="btn btn-secondary ti-back-left btn-sm"></button>
-                                                </div>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <h3>Technical Assistance Requests - <?php echo $_SESSION['name']; ?></h3>
+                                        <button type="button" id="close_button" class="btn btn-primary ti-back-left btn-sm float-right"> Back to Requests List</button>
                                         </div>
-                                        <div class="table-responsive">
+                                        </div>
+                                        <div class="table-responsive"><hr><br>
                                             <table id="user_data" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>

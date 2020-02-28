@@ -220,9 +220,14 @@ if(!isset($_SESSION['username'])){
                             <!-- /# column -->
                             <div class="col-md-12">
                                 <div class="card">
+                                <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item active"><a>Technical Assistance Requests List</a></li>
+                                        </ol>
+                                    </nav>
                                     <div class="card-body">
-                                    <h3>Technical Assistance</h3><br>
-                                        <div class="table-responsive">
+                                    <h3>Technical Assistance Requests List</h3><br>
+                                        <div class="table-responsive"><hr><br>
                                             <table id="user_data" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>

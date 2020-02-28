@@ -62,7 +62,7 @@ a,i {
 					<div class="field-group">
 						<span class="fa fa-lock" aria-hidden="true"></span>
 						<div class="wthree-field">
-  								<input class="form-control pwd" name="password" id="password" type="Password" placeholder="Password">
+  								<input class="form-control pwd" name="password" id="password" type="Password" placeholder="Password" required>
 						</div>
 						<a class="btn btn-default reveal pointer" type="button">
 							<span class="fa fa-eye" aria-hidden="true"></span>
@@ -94,7 +94,7 @@ a,i {
 			<div class="links">
 				<ul class="links-unordered-list">
 					<li class="">
-						<a href="#" class="">About Us</a>
+						<a href="about.php" class="">About Us</a>
 					</li>
 					<li class="">
 						<a href="#" class="">Privacy Policy</a>
@@ -105,7 +105,7 @@ a,i {
 				</ul>
 			</div>
 			<div class="copyright">
-				<p>© 2019 Key. All rights reserved | Design by
+				<p>© 2019 PATE. All rights reserved | Design by
 					<a href="http://dnsc.edu.ph/">DNSC - IIT.</a>
 				</p>
 			</div>
