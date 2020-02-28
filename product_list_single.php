@@ -26,6 +26,21 @@ foreach($result as $row)
         $statement7->execute();
     }
 }
+
+$query123="SELECT * from inventory_all_products where type_product='Fertilizers'";
+$statement123 = $connection->prepare($query123);
+$statement123->execute();
+$result123 = $statement123->fetchAll();
+foreach($result123 as $row)
+{
+    $now = date('Y-m-d H:i:s'); 
+    if($row['expiry_date'] <= $now){
+            $quer="UPDATE inventory_all_products SET status='Expired' WHERE id=".$row['id']." ";
+            $statement7 = $connection->prepare($quer);
+            $statement7->execute();
+            echo "hello";
+    }
+}
 ?>
 
 <!DOCTYPE html>

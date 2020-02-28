@@ -63,7 +63,7 @@
             </div>
         </div>
     </div><br>
-            <div align="center" id="chartContainer" style="height: 400px; width: 70%;"></div>
+            <div class="container" align="center" id="chartContainer" style="height: 400px; width: 70%;"></div>
        
             <input type="hidden" value="<?php echo $_POST['year']; ?>" id="year">
             <input type="hidden" value="<?php echo $_POST['type']; ?>" id="type">
@@ -131,7 +131,7 @@
             </div>
         </div>
     </div><br>
-            <div align="center" id="chartContainer" style="height: 400px; width: 70%;"></div>
+            <div class="container" align="center" id="chartContainer" style="height: 400px; width: 70%;"></div>
        
             <input type="hidden" value="<?php echo $_POST['year']; ?>" id="year">
             <input type="hidden" value="<?php echo $_POST['type']; ?>" id="type">
@@ -149,10 +149,7 @@
             <tbody>
             <?php 
             $count=1;
-            $query = 'SELECT t1.year as year,t1.num as num,t1.created_at as created_at from
-            (select count(distinct beneficiary_id) as num,year(created_at) as year,
-             created_at as created_at from record_assistance_beneficiary where year(created_at)
-              between "'.$yearf.'" and "'.$yeart.'" group by year(created_at)) as t1 ';
+            $query = 'SELECT sum(t2.num) as num, t2.year as year from (select count(distinct beneficiary_id) as num,year(created_at) as year from record_assistance_beneficiary group by month(created_at),year(created_at)) as t2 where t2.year between "'.$yearf.'" and "'.$yeart.'" group by t2.year ';
 
             $statement = $connection->prepare($query);
             $statement->execute();
@@ -198,7 +195,7 @@
             </div>
         </div>
     </div><br>
-            <div align="center" id="chartContainer" style="height: 400px; width: 70%;"></div>
+            <div class="container" align="center" id="chartContainer" style="height: 400px; width: 70%;"></div>
        
             <input type="hidden" value="<?php echo $_POST['year']; ?>" id="year">
             <input type="hidden" value="<?php echo $_POST['type']; ?>" id="type">

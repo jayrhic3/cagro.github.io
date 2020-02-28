@@ -70,10 +70,10 @@ class myPDF extends FPDF{
        {
         $this->SetFont('Times','',8);
         $this->Cell(10,10,($count+=1).'.',1,0,'L');
-        $this->Cell(25,10,$row['lastname'],1,0,'L');
-        $this->Cell(25,10,$row['firstname'],1,0,'L');
+        $this->Cell(25,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+        $this->Cell(25,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
         $this->Cell(40,10,$row['type'],1,0,'L');
-        $this->Cell(50,10,$row['product'],1,0,'L');
+        $this->Cell(50,10,ucfirst(strtolower($row['product'])),1,0,'L');
         $this->Cell(15,10,$row['quantity'],1,0,'L');
         $this->Cell(30,10,$row['cre'],1,0,'L');
         $this->Ln();

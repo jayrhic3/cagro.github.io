@@ -13,5 +13,5 @@
     $statement->execute();
    
 
-   echo "Data Inserted Succesfully";
+   echo "Data Saved Succesfully";
 ?>

@@ -26,6 +26,8 @@ if(isset($_SESSION['position'])){
     <!-- Standard -->
     <link type="image/x-icon" href="assets/images/cagro5.png" rel="shortcut icon">
     
+    
+
    <!-- Common -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
@@ -35,6 +37,12 @@ if(isset($_SESSION['position'])){
     
 </head>
 <style>
+    .card{
+        width:450px;
+        margin-top:50px;
+        margin-left:520px;
+        background-color: white;
+    }
     .btn-primary{
         margin-left:170px;
     }
@@ -51,18 +59,14 @@ if(isset($_SESSION['position'])){
         text-align: center;
     }
     .back{
-        background-image: url("assets/images/green.jpg");
-        background-size: 1500px;
-        /*background-color: #0b6623; */
-    }
-    body {
-  overflow: hidden; /* Hide scrollbars */
+        background-color: #343957; 
     }
 </style>
 
 <body class="back">
-    <div class="mx-auto mt-4" style="width: 400px;">
-        <div class="card card-body " style="height: 38rem;">
+<div class="aqua-gradient color-block mb-3 mx-auto rounded-circle z-depth-1">
+    <div class="card">
+        <div class="card-body">
             <form method="post" id="user_form">
             <img src="assets/images/infosteam.png" class="img-fluid" alt="Responsive image">
                 <h1 style="text-align:center;">Sign in</h1>

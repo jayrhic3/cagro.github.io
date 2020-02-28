@@ -25,7 +25,7 @@ $statement5->execute();
 
 class myPDF extends FPDF{
     function header(){
-        $this->Rect(5,5,140,200,'D');
+        $this->Rect(5,5,140,140,'D');
         $date=date('h:i:s a m/d/Y',time());
         $cdate=date('F j, Y',strtotime($date));
        
@@ -119,7 +119,7 @@ class myPDF extends FPDF{
 
 $pdf=new myPDF();
 $pdf->AliasNbPages();
-$pdf->AddPage('P',array(148,210));
+$pdf->AddPage('P',array(150,150));
 $pdf->viewTable($connection,$single_id);
 $pdf->Output();
 

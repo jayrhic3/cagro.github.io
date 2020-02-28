@@ -19,8 +19,8 @@ include('connection.php');
 		$result = $statement->execute();
 		if(!empty($result))
 		{
-			echo 'Renewed Successfully!';
+			echo 'Succesfully Renew';
 		}else{
-			echo "Unsuccessful!";
+			echo "wrong";
 		}
 ?>

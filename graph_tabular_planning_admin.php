@@ -2,19 +2,12 @@
 
 session_start();
 include('connection.php');
+
 if(!isset($_SESSION['username'])){
     header('location:index.php');
 }
 
-$dataPoints = array( 
-	array("y" => 3373.64, "label" => "Germany" ),
-	array("y" => 2435.94, "label" => "France" ),
-	array("y" => 1842.55, "label" => "China" ),
-	array("y" => 1828.55, "label" => "Russia" ),
-	array("y" => 1039.99, "label" => "Switzerland" ),
-	array("y" => 765.215, "label" => "Japan" ),
-	array("y" => 612.453, "label" => "Netherlands" )
-);
+
 
 $query="SELECT * from inventory_all_products";
 $statement = $connection->prepare($query);
@@ -62,28 +55,33 @@ foreach($result as $row)
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/lib/helper.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
-
+    <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <!-- Datatable -->
     <link href="assets/css/jquery-ui.css" rel="stylesheet" />
     <link href="assets/css/morris.css" rel="stylesheet" />
+
 
     <style>
         .back{
             background:skyblue;
         }
-        #type{
-            margin-top:30px;
+        .year{
+            margin-top:8px;
+            margin-left:160px;
         }
-        .d{
-            margin-top:7px;
+        .yearinput{
+            margin-left:-250px;
         }
-        .c{
-            margin-top:7px;
+        .year_but{
+            margin-left:-25px;
         }
-        .btn-warning{
-            margin-top:30px;
+        .form-control{
+            border-color:black;
         }
         .btn-primary{
+            margin-top:30px;
+        }
+        .btn-warning{
             margin-top:30px;
         }
         
@@ -121,8 +119,8 @@ foreach($result as $row)
             <div class="row">
                 <div class="col-lg-12">
                     <div class="float-left">
-                    <h4 id="datetime"></h4>
-                            <h5 id="time"></h5>
+                        <h4 id="datetime"></h4>
+                        <h5 id="time"></h5>
                     </div>
                     <div class="float-right">
                         <div class="dropdown dib">
@@ -202,6 +200,8 @@ foreach($result as $row)
                                 </div>
                             </div>
                         </div>
+
+
                         
                         <div class="dropdown dib">
                             <div class="header-icon" data-toggle="dropdown">
@@ -209,7 +209,7 @@ foreach($result as $row)
                                     <i class="ti-angle-down f-s-10"></i>
                                 </span>
                                 <div class="drop-down dropdown-profile dropdown-menu dropdown-menu-right">
-                               
+                              
                                     <div class="dropdown-content-body">
                                         <ul>
                                             <li>
@@ -244,50 +244,18 @@ foreach($result as $row)
     </div>
 
 
+
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8 p-r-0 title-margin-right">
-                        <div class="page-header">
-                            <div class="page-title">
-                                <h1>Hello,
-                                    <span>Welcome to Cagro Home</span>
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /# column -->
-                    <div class="col-lg-4 p-l-0 title-margin-left">
-                        <div class="page-header">
-                            <div class="page-title">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="#">Dashboard</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">Home</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /# column -->
-                </div>
-                <!-- /# row -->
-
-
-
-                <form action="print_graph3.php" method="post" target="_blank">
-                <div class="row">
-                        <div class="col-md-12">
+                
+                            <form action="print_graph.php" method="post" target="_blank">
+                            <div class="row">
+                            <!-- /# column -->
+                            <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-1.5 d">
+                                    <div class="col-md-3">
                                         <h5>Type of Report:</h5>
-                                        <select name="stype" id="stype" class="form-control">
-                                        <option value="Gender">Gender</option>
-                                        <option value="Beneficiary">Beneficiary</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1.5 c">
                                         <select name="type" id="type" class="form-control">
                                             <option value="Monthly">Monthly</option>
                                             <option value="Yearly">Yearly</option>
@@ -364,28 +332,33 @@ foreach($result as $row)
                                             </select>
                                         </div>
                                     </div>
-                                    
-                                        <div class="col-md-1">
-                                                <button type="button" class="btn btn-primary ti-search" id="sear"></button>
-                                        
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div align="right">
-                                                <button type="submit" class="btn btn-warning ti-printer"></button>
-                                                <button type="button" id="tabular1" class="btn btn-primary ti-eye"> Tabular</button>
-                                                <button type="button" id="tabular2" class="btn btn-primary ti-eye"> Tabular</button>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-1">
+                                            <button type="button" class="btn btn-primary ti-search" id="sear"></button>
+                                      
                                     </div>
-                                
-                                <div class="card back">
-                                    <div class="card-body">
-                                        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                                    <div class="col-md-2">
+                                        <div align="right">
+                                            <button type="submit" class="btn btn-warning ti-printer"></button>
+                                            <button type="button" id="graph" class="btn btn-primary ti-eye"> Graph</button>
+                                        </div>
                                     </div>
                                 </div>
-
+                                </form>
+                                    <div class="card-body">
+                                        <table id="user_data" class="table table-stripped table-bordered">
+                                                <thead>
+                                                    <th>Date</th>
+                                                    <th>Year</th>
+                                                    <th>Month</th>
+                                                    <th>Type of Product</th>
+                                                    <th>Product Name</th>
+                                                    <th style="text-align:center;">Total No. Serve</th>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                        </table>
+                                    </div>
                             </div>
-                            
                         </div>
                       
                         <div class="row">
@@ -407,7 +380,7 @@ foreach($result as $row)
     
 
 </body>
-    <script src="js/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/morris.min.js"></script>
@@ -418,26 +391,26 @@ foreach($result as $row)
     <script src="assets/js/lib/preloader/pace.min.js"></script>
     <script src="js/canvasjs.min.js"></script>
     <script src="js/moment.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
     
 
 </html>
 
 <script>
 $(document).ready(function(){ 
+    
     var interval=setInterval(function(){
         var momentNow=new moment();
         $('#datetime').html(momentNow.format('MMMM DD, YYYY')+' '+momentNow.format('dddd').substring(0,3).toUpperCase());
         $('#time').html(momentNow.format('A hh:mm:ss'));
    },100);
 
- $('#yearf').hide();
+   $('#yearf').hide();
     $('#yeart').hide();
     $('#yearni').show();
     $('#sear').hide();
     $('#cdatef').hide();
     $('#cdatet').hide();
-    $('#tabular1').show();
-    $('#tabular2').hide();
 
     $(document).on('change','#type',function(){
         var type=$('#type').val();
@@ -465,283 +438,57 @@ $(document).ready(function(){
        }
     });
 
-    $(document).on('click','#sear',function(){
-        var type=$('#stype').val();
-        if(type=='Beneficiary'){
-            fetchChartB();
-        }
-        if(type=='Gender'){
-            fetchChart();
-        }
-    });
-
-    $(document).on('click', '#tabular1', function(){
-        document.location.href="graph_tabular_admin_stat1.php";
-    });
-    $(document).on('click', '#tabular2', function(){
-        document.location.href="graph_tabular_admin_stat2.php";
-    });
-
-fetchChart();
+    fetchChart();
+   var dataTable;
  function fetchChart(){
-    var type=$('#stype').val();
+
     var year=$('#year').val();
-    var types=$('#type').val();
+    var type=$('#type').val();
     var yearf=$('#yearfrom').val();
     var yeart=$('#yearto').val();
     var datef=$('#datefrom').val();
     var datet=$('#dateto').val();
-    $.ajax({
-			url:"fetch_single_chart_report.php",
-			method:"POST",
-			data:{type:type,year:year,types:types,yearf:yearf,yeart:yeart,datef:datef,datet:datet},
-			dataType:"json",
-			success:function(data)
-			{
 
-            if(types=='Monthly'){
-                var chart = new CanvasJS.Chart("chartContainer");
-                chart.options.title = { text: "Beneficiary Serve per Gender" };
-                chart.options.exportEnabled = true;
-                chart.options.animationEnabled = true;
-                chart.options.theme = "light2";
+    dataTable = $('#user_data').DataTable({
+            "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+            "processing":true,
+            "serverSide":true,
+            "order":[],
+            "ajax":{
+                url:"fetch_chart_table2.php",
+                type:"POST",
+                data:{'year':year,'type':type,'yearf':yearf,'yeart':yeart,'datef':datef,'datet':datet}
+            },
+            "columnDefs":[
+                {
+                    "targets":[0, 3, 3],
+                    "orderable":false,
+                },
+            ],
 
-                var series1 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "January",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series2 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "February",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series3 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "March",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series4 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "April",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series5 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "May",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series6 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "June",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series7 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "July",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series8 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "August",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series9 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "September",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series10 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "October",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series11 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "November",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                var series12 = { //dataSeries - first quarter
-                    type: "column",
-                    name: "December",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-
-                chart.options.data = [];
-
-                series1.dataPoints = data[0];
-                series2.dataPoints = data[1];
-                series3.dataPoints = data[2];
-                series4.dataPoints = data[3];
-                series5.dataPoints = data[4];
-                series6.dataPoints = data[5];
-                series7.dataPoints = data[6];
-                series8.dataPoints = data[7];
-                series9.dataPoints = data[8];
-                series10.dataPoints = data[9];
-                series11.dataPoints = data[10];
-                series12.dataPoints = data[11];
-
-
-                chart.options.data.push(series1);
-                chart.options.data.push(series2);
-                chart.options.data.push(series3);
-                chart.options.data.push(series4);
-                chart.options.data.push(series5);
-                chart.options.data.push(series6);
-                chart.options.data.push(series7);
-                chart.options.data.push(series8);
-                chart.options.data.push(series9);
-                chart.options.data.push(series10);
-                chart.options.data.push(series11);
-                chart.options.data.push(series12);
-
-                chart.render();
-            }else if(types=='Yearly'){
-
-                var chart = new CanvasJS.Chart("chartContainer");
-                chart.options.title = { text: "Beneficiary Serve per Gender" };
-                chart.options.exportEnabled = true;
-                chart.options.animationEnabled = true;
-                chart.options.theme = "light2";
-
-                chart.options.data = [];
-                var start = 0;
-                var end = 0;
-                start = yearf;
-                end = yeart;
-                var val = 0;
-
-                for(i=start;i<=end;i++){
-                    var series1 = { 
-                    type: "column",
-                    name: ""+i+"",
-                    yValueFormatString: "#,##0",
-                    showInLegend: true
-                };
-                    series1.dataPoints = data[val];
-                    chart.options.data.push(series1);
-                    val++;
-                }
-                    
-                chart.render();
-                
-
-            }else if(types=='Customize'){
-                var chart = new CanvasJS.Chart("chartContainer", {
-                    animationEnabled: true,
-                    theme: "light2",
-                    zoomEnabled: true,
-                    exportEnabled:true,
-                    title:{
-                        text: "Beneficiary Serve per Month"
-                    },
-                    axisY: {
-                        title: "Total Beneficiary Serve"
-                    },
-                    data: [{
-                        type: "column",
-                        yValueFormatString: "#,##0",
-                        dataPoints: data
-                    }]
-                });
-                chart.render();
-               
-            }
-            
-
-
-			}
-		});
+            });
     };
 
-    function fetchChartB(){
-    var type=$('#stype').val();
-    var types=$('#type').val();
-    var year=$('#year').val();
-    var yearf=$('#yearfrom').val();
-    var yeart=$('#yearto').val();
-    var datef=$('#datefrom').val();
-    var datet=$('#dateto').val();
-    $.ajax({
-			url:"fetch_single_chart_report.php",
-			method:"POST",
-			data:{type:type,year:year,types:types,yearf:yearf,yeart:yeart,datef:datef,datet:datet},
-			dataType:"json",
-			success:function(data)
-			{
-               var chart = new CanvasJS.Chart("chartContainer", {
-                    animationEnabled: true,
-                    theme: "light2",
-                    zoomEnabled: true,
-                    exportEnabled:true,
-                    title:{
-                        text: "Beneficiary Serve per Month"
-                    },
-                    axisY: {
-                        title: "Total Beneficiary Serve"
-                    },
-                    data: [{
-                        type: "column",
-                        yValueFormatString: "#,##0",
-                        dataPoints: data
-                    }]
-                });
-                chart.render();
-			}
-		});
-    };
-
-    $(document).on('change','#stype',function(){
-
-        var type=$('#stype').val();
-        if(type=='Beneficiary'){
-            $('#tabular1').hide();
-            $('#tabular2').show();
-            fetchChartB();
-        }
-        if(type=='Gender'){
-            $('#tabular1').show();
-            $('#tabular2').hide();
-            fetchChart();
-        }
-       
+    $(document).on('click','#sear',function(){
+        dataTable.clear().destroy();
+        fetchChart();
+    });
+    $(document).on('click','#graph',function(){
+        document.location.href="dashboard3.php";
     });
 
-    $(document).on('change','#type',function(){
-        var type=$('#stype').val();
-        if(type=='Beneficiary'){
-            fetchChartB();
-        }
-        if(type=='Gender'){
-            fetchChart();
-        }
+   
+
+    $(document).on('click','#sear',function(){
+        dataTable.clear().destroy();
+        fetchChart();
     });
 
     $(document).on('change','#year',function(){
-        var type=$('#stype').val();
-        if(type=='Beneficiary'){
-            fetchChartB();
-        }
-        if(type=='Gender'){
-            fetchChart();
-        }
-       
+        dataTable.clear().destroy();
+        fetchChart();
     });
-    
-    
+
     $('#logout').click(function(){
         document.location.href="logout.php";
     });
@@ -754,6 +501,7 @@ fetchChart();
     $('#view_notif').click(function(){
         document.location.href="notification_table_inventory_admin.php";
     });
+
 
 });
 </script>

@@ -9,9 +9,9 @@ $dateto=$_POST["dateto"];
 if($status=='Latest' && $datefrom=='' && $dateto==''){
     $query = ''; 
     $output = array();
-    $query .= 'SELECT t2.prod as product_name,t2.damage as damage,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
+    $query .= 'SELECT t2.prod as product_name,t2.xdate as xdate,t2.damage as damage,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
     t2.stat as status,t2.d as id,t2.created as created_at,t2.word_created as dates from (select product_name as prod,units as unit,
-    quantity as quan,despensed as despense,status as stat,damage as damage,id as d,created_at as created,word_created as word_created from 
+    quantity as quan,despensed as despense,status as stat,damage as damage,expiry_date as xdate,id as d,created_at as created,word_created as word_created from 
     inventory_all_products where type_product="Fertilizers" and status_updated="Latest") as t2 ';
 
     if(isset($_POST["search"]["value"]))
@@ -52,12 +52,18 @@ if($status=='Latest' && $datefrom=='' && $dateto==''){
             $sub_array[] = $row["despensed"];
             $sub_array[] = $row["damage"];
             if($row["quantity"]>20){
-                $sub_array[] = '<p style="background-color:lightgreen">'.'Available'.'</p>';
+                if($row["status"]=='Expired'){
+                    $sub_array[] = '<p style="background-color:red">'.'Expired'.'</p>';
+                }else{
+                    $sub_array[] = '<p style="background-color:lightgreen">'.'Available'.'</p>';
+                }
             }else if($row["quantity"]<=0){
                 $sub_array[] = '<p style="background-color:pink">'.'Not Available'.'</p>';
             }else if($row["quantity"]>0 && $row["quantity"]<=20){
                 $sub_array[] = '<p style="background-color:yellow">'.'Low Stock'.'</p>';
             }
+            $sub_array[] = date('F j, Y',strtotime($row['xdate']));
+            
             $sub_array[] = $row["dates"];
             $sub_array[] = '<button type="button" name="check" id="'.$row["id"].'" class="btn btn-warning btn-sm ti-pencil check" data-toggle="modal" data-target="#userModal"></button><button type="button" name="check" id="'.$row["id"].'" class="btn btn-success btn-sm ti-plus renew" data-toggle="modal" data-target="#userModal3">Renew</button><button type="button" name="check" id="'.$row["id"].'" class="btn btn-danger btn-sm ti-trash damage" data-toggle="modal" data-target="#userModal4"></button>';
             $data[] = $sub_array;

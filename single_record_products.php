@@ -462,9 +462,17 @@ foreach($result as $row)
                             <b><button type="button" class="close" data-dismiss="modal" id="ex_close_con"><span class="ti-close"></span></button></b>
                         </div>
                         <div class="modal-body">
+                         <div class="form-group">
+                                <label>Product Name:</label>
+                                <input type="text" class="form-control" id="product_name" name="product_name">
+                           </div>
                            <div class="form-group">
                                 <label>Quantity:</label>
                                 <input type="number" class="form-control" id="quantity" name="quantity">
+                           </div>
+                           <div class="form-group">
+                                <label>Total Quantity of the Product:</label>
+                                <input type="number" class="form-control" id="quan" name="quan">
                            </div>
                            <div class="form-group">
                                 <label>Status</label>
@@ -643,6 +651,8 @@ $(document).ready(function(){
 			success:function(data)
 			{
                 $('#quantity').val(data.quantity);
+                $('#quan').val(data.quan);
+                $('#product_name').val(data.prod);
                 $('#status').val(data.status);
                 $('#id_product').val(data.unique_id);
 			}
@@ -650,7 +660,15 @@ $(document).ready(function(){
     }); 
 
     $(document).on('submit','#assistance_form23',function(){
-        $.ajax({
+
+        var quantity = $('#quantity').val();
+        var quan = $('#quan').val();
+
+        if(quantity > quan){
+            alert('wrong value');
+            $('#userModal3').modal('hide');
+        }else{
+            $.ajax({
             url:"update_product_user.php",
             method:'POST',
             data:new FormData(this),
@@ -664,6 +682,8 @@ $(document).ready(function(){
                 dataTable.ajax.reload();
             }
         });
+        }
+
     });
 
     $(document).on('click', '#can', function(){

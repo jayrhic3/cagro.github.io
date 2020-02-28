@@ -7,7 +7,7 @@ $type=$_POST['type'];
     $query .= 'SELECT t2.prod as product_name,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
     t2.stat as status,t2.d as id,t2.created as created_at from (select product_name as prod,units as unit,
     quantity as quan,despensed as despense,status as stat,id as d,created_at as created from 
-    inventory_all_products where type_product="'.$type.'" and status_updated="Latest" and quantity >= 20) as t2 ';
+    inventory_all_products where type_product="'.$type.'" and status_updated="Latest" and status != "Expired") as t2 ';
 
     if(isset($_POST["search"]["value"]))
     {
@@ -44,7 +44,11 @@ $type=$_POST['type'];
             $sub_array[] = $row["units"];
             $sub_array[] = $row["quantity"];
             if(intval($row["quantity"])>20){
-                $sub_array[] = '<p style="background-color:lightgreen">'.'Available'.'</p>';
+                if($row["status"]=='Expired'){
+                    $sub_array[] = '<p style="background-color:red">'.'Expired'.'</p>';
+                }else{
+                    $sub_array[] = '<p style="background-color:lightgreen">'.'Available'.'</p>';
+                }
             }else if(intval($row["quantity"])<=0){
                 $sub_array[] = '<p style="background-color:pink">'.'Not Available'.'</p>';
             }else if(intval($row["quantity"])>0 && intval($row["quantity"])<=20){

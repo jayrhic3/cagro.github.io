@@ -60,7 +60,7 @@ if(isset($_POST["product_name"]))
     {
         echo 'Succesfully Added';
     }else{
-        echo "Unsuccessful!";
+        echo "wrong";
     }
 }
 

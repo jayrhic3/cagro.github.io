@@ -20,9 +20,9 @@ include('connection.php');
 		$result = $statement->execute();
 		if(!empty($result))
 		{
-			echo 'Updated Successfuly!';
+			echo 'Succesfully Updated';
 		}else{
-			echo "Unsuccessful!";
+			echo "wrong";
 		}
 	
 ?>

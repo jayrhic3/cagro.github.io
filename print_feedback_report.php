@@ -65,9 +65,9 @@ class myPDF extends FPDF{
        {
         $this->SetFont('Times','',10);
         $this->Cell(15,10,($count+=1).'.',1,0,'L');
-        $this->Cell(32,10,$row['ass'],1,0,'L');
-        $this->Cell(25,10,$row['rate'],1,0,'L');
-        $this->Cell(90,10,$row['comment'],1,0,'L');
+        $this->Cell(32,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+        $this->Cell(25,10,ucfirst(strtolower($row['rate'])),1,0,'L');
+        $this->Cell(90,10,ucfirst(strtolower($row['comment'])),1,0,'L');
         $this->Cell(33,10,$row['created'],1,0,'L');
         $this->Ln();
        }

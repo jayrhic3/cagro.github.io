@@ -29,6 +29,21 @@ foreach($result as $row)
     }
 }
 
+$query123="SELECT * from inventory_all_products where type_product='Fertilizers'";
+$statement123 = $connection->prepare($query123);
+$statement123->execute();
+$result123 = $statement123->fetchAll();
+foreach($result123 as $row)
+{
+    $now = date('Y-m-d H:i:s'); 
+    if($row['expiry_date'] <= $now){
+            $quer="UPDATE inventory_all_products SET status='Expired' WHERE id=".$row['id']." ";
+            $statement7 = $connection->prepare($quer);
+            $statement7->execute();
+            echo "hello";
+    }
+}
+
 $query3="SELECT unit_prod FROM unit_q";
 $statement3 = $connection->prepare($query3);
 $statement3->execute();
@@ -46,6 +61,10 @@ foreach($result3 as $row3)
 {
     $sub_array2[] = $row3["des"];
 }
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -324,6 +343,7 @@ foreach($result3 as $row3)
                                                             <th >Despensed</th>
                                                             <th >Damage</th>
                                                             <th width="12%">Status</th>
+                                                            <th>Expiry Date</th>
                                                              <th>Date Created</th>
                                                             <th width="15%">Action</th>
                                                         </tr>
@@ -373,6 +393,10 @@ foreach($result3 as $row3)
                                 <div class="form-group">
                                     <label>Quantity:</label>
                                     <input type="number" name="cquantity" id="cquantity" class="form-control" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Expiry Date:</label>
+                                    <input type="date" name="xdate" id="xdate" class="form-control">
                                 </div>
                         </div>
                         <div class="modal-footer">
@@ -647,10 +671,12 @@ $(document).ready(function(){
                        $('#cproduct_name').val(data.product_name);
                        $('#cunit').val(data.units);
                        $('#cquantity').val(data.quantity);
+                       $('#xdate').val(data.xdate);
                        $('#cid').val(data.id);
                     }
                 });
 	});
+
     $(document).on('click', '.damage', function(){
         var user_id = $(this).attr("id");
             $.ajax({
@@ -688,11 +714,12 @@ $(document).ready(function(){
         var product_name=$('#cproduct_name').val();
         var unit= $('#cunit').val();
         var quantity= $('#cquantity').val();
+        var xdate = $('#xdate').val();
         var cid=$('#cid').val();
         $.ajax({
 				url:"update_fertilizers.php",
 				method:'POST',
-				data:{'product_name':product_name,'unit':unit,'quantity':quantity,'cid':cid},
+				data:{'product_name':product_name,'unit':unit,'quantity':quantity,'cid':cid,'xdate':xdate},
 				success:function(data)
 				{
                     alert(data);

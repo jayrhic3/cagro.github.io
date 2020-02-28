@@ -68,7 +68,12 @@ foreach($result as $row)
     <link href="assets/css/morris.css" rel="stylesheet" />
 
     <style>
-       
+        .btn-primary{
+            margin-top:30px;
+        }
+        .btn-warning{
+            margin-top:30px;
+        }
     </style>
     
 </head>
@@ -235,34 +240,109 @@ foreach($result as $row)
                 <!-- /# row -->
 
 
-                <div class="row">
+                <form action="print_graph2.php" method="post" target="_blank">
+                            <div class="row">
                             <!-- /# column -->
                             <div class="col-md-12">
-                                <h5>Year:</h5>
-                                    <select name="year" id="year" class="form-control">
-                                        <?php 
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h5>Type of Report:</h5>
+                                        <select name="type" id="type" class="form-control">
+                                            <option value="Monthly">Monthly</option>
+                                            <option value="Yearly">Yearly</option>
+                                            <option value="Customize">Customize</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div id="cdatef">
+                                            <h5>Date from:</h5>
+                                            <input type="date" id="datefrom" name="datefrom" class="form-control">
+                                        </div>
+                                        <div id="yearf">
+                                        <h5>Year from:</h5>
+                                            <select name="yearfrom" id="yearfrom" class="form-control">
+                                            <?php 
                                             
-                                            $starting_year  =2018;
-                                            $ending_year = date('Y');
-                                            for($starting_year; $starting_year <= $ending_year; $starting_year++) {
-                                                if($starting_year == date('Y')) {
-                                                    echo '<option value="'.$starting_year.'" selected="selected">'.$starting_year.'</option>';
-                                                } else {
-                                                    echo '<option value="'.$starting_year.'">'.$starting_year.'</option>';
-                                                }
-                                            } 
+                                                $starting_year  =2018;
+                                                $ending_year = date('Y');
+                                                for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+                                                    if($starting_year == date('Y')) {
+                                                        echo '<option value="'.$starting_year.'" selected="selected">'.$starting_year.'</option>';
+                                                    } else {
+                                                        echo '<option value="'.$starting_year.'">'.$starting_year.'</option>';
+                                                    }
+                                                } 
                                             
                                             
                                             ?>
-                                    </select>
-                                <div class="card back">
-                                    <div class="card-body">
-                                        <h3>Dashboard</h3>
-                                        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                                            </select>
+                                        </div>
+                                        
+                                        <div id="yearni">
+                                        <h5>Year:</h5>
+                                            <select name="year" id="year" class="form-control">
+                                            <?php 
+                                            
+                                                $starting_year  =2018;
+                                                $ending_year = date('Y');
+                                                for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+                                                    if($starting_year == date('Y')) {
+                                                        echo '<option value="'.$starting_year.'" selected="selected">'.$starting_year.'</option>';
+                                                    } else {
+                                                        echo '<option value="'.$starting_year.'">'.$starting_year.'</option>';
+                                                    }
+                                                } 
+                                            
+                                            
+                                            ?>
+                                            </select>
+                                            </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div id="cdatet">
+                                            <h5>Date from:</h5>
+                                            <input type="date" id="dateto" name="dateto" class="form-control">
+                                        </div>
+                                        <div id="yeart">
+                                        <h5>Year to:</h5>
+                                            <select name="yearto" id="yearto" class="form-control">
+                                            <?php 
+                                            
+                                                $starting_year  =2018;
+                                                $ending_year = date('Y');
+                                                for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+                                                    if($starting_year == date('Y')) {
+                                                        echo '<option value="'.$starting_year.'" selected="selected">'.$starting_year.'</option>';
+                                                    } else {
+                                                        echo '<option value="'.$starting_year.'">'.$starting_year.'</option>';
+                                                    }
+                                                } 
+                                            
+                                            
+                                            ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                            <button type="button" class="btn btn-primary ti-search" id="sear"></button>
+                                      
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div align="right">
+                                            <button type="submit" class="btn btn-warning ti-printer"></button>
+                                            <button type="button" id="tabular" class="btn btn-primary ti-eye"> Tabular</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="chartContainer" style="height: 370px; width: 100%;"></div><br>
+                                    <div id="chartContainer3" style="height: 370px; width: 100%;"></div><br>
                                 </div>
                             </div>
                         </div>
+                    </div>
                       
                         <div class="row">
                             <div class="col-lg-12">
@@ -306,36 +386,265 @@ $(document).ready(function(){
         $('#time').html(momentNow.format('A hh:mm:ss'));
    },100);
 
+   $('#yearf').hide();
+    $('#yeart').hide();
+    $('#yearni').show();
+    $('#sear').hide();
+    $('#cdatef').hide();
+    $('#cdatet').hide();
+
+    $(document).on('change','#type',function(){
+        var type=$('#type').val();
+       if(type=='Monthly'){
+            $('#yearf').hide();
+            $('#yeart').hide();
+            $('#yearni').show();
+            $('#sear').hide();
+            $('#cdatef').hide();
+            $('#cdatet').hide();
+       }else if(type=='Yearly'){
+            $('#yearf').show();
+            $('#yeart').show();
+            $('#yearni').hide();
+            $('#sear').show();
+            $('#cdatef').hide();
+            $('#cdatet').hide();
+       }else if(type=='Customize'){
+            $('#cdatef').show();
+            $('#cdatet').show();
+            $('#yearf').hide();
+            $('#yeart').hide();
+            $('#yearni').hide();
+            $('#sear').show();
+       }
+    });
+
+    $(document).on('click','#sear',function(){
+        fetchChart();
+    });
+
+    $(document).on('click', '#tabular', function(){
+        document.location.href="graph_tabular_planning_admin.php";
+    });
+    var chart;
  fetchChart();
  function fetchChart(){
     var year=$('#year').val();
+    var type=$('#type').val();
+    var yearf=$('#yearfrom').val();
+    var yeart=$('#yearto').val();
+    var datef=$('#datefrom').val();
+    var datet=$('#dateto').val();
+    
     $.ajax({
 			url:"fetch_single_chart2.php",
 			method:"POST",
-			data:{year:year},
+			data:{year:year,type:type,yearf:yearf,yeart:yeart,datef:datef,datet:datet},
 			dataType:"json",
 			success:function(data)
 			{
-               var chart = new CanvasJS.Chart("chartContainer", {
-                    animationEnabled: true,
-                    theme: "light2",
-                    zoomEnabled: true,
-                    exportEnabled:true,
-                    title:{
-                        text: "Issued Product per Category"
-                    },
-                    axisY: {
-                        title: "Total Stock Issued"
-                    },
-                    data: [{
+                
+                if(type=="Monthly"){
+                    $('#chartContainer3').hide();
+                    $('#chartContainer').show();
+                var chart = new CanvasJS.Chart("chartContainer");
+
+                chart.options.axisY = { title: "Total Stock Issued" };
+                chart.options.title = { text: " Product Issued per Category" };
+                chart.options.exportEnabled = true;
+                chart.options.zoomEnabled = true;
+                chart.options.animationEnabled = true;
+                chart.options.theme = "light2";
+
+                    var series1 = { //dataSeries - first quarter
                         type: "column",
+                        name: "January",
                         yValueFormatString: "#,##0",
-                        dataPoints: data
-                    }]
-                });
-                chart.render();
+                        showInLegend: true
+                    };
+
+                    var series2 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "February",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                    var series3 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "March",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                    var series4 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "April",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                     var series5 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "May",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                    var series6 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "June",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                    var series7 = { //dataSeries - first quarter
+                        type: "column",
+                        name: "July",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+
+                    var series8 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "August",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                    var series9 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "September",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                    var series10 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "October",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                     var series11 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "November",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                    var series12 = { //dataSeries - second quarter
+                        type: "column",
+                        name: "December",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+
+
+                    chart.options.data = [];
+
+                    series1.dataPoints = data[0];
+                    series2.dataPoints = data[1];
+                    series3.dataPoints = data[2];
+                    series4.dataPoints = data[3];
+                    series5.dataPoints = data[4];
+                    series6.dataPoints = data[5];
+                    series7.dataPoints = data[6];
+                    series8.dataPoints = data[7];
+                    series9.dataPoints = data[8];
+                    series10.dataPoints = data[9];
+                    series11.dataPoints = data[10];
+                    series12.dataPoints = data[11];
+
+                    chart.options.data.push(series1);
+                    chart.options.data.push(series2);
+                    chart.options.data.push(series3);
+                    chart.options.data.push(series4);
+                    chart.options.data.push(series5);
+                    chart.options.data.push(series6);
+                    chart.options.data.push(series7);
+                    chart.options.data.push(series8);
+                    chart.options.data.push(series9);
+                    chart.options.data.push(series10);
+                    chart.options.data.push(series11);
+                    chart.options.data.push(series12);
+
+                    chart.render();
+                }else if(type=="Yearly"){
+
+                    $('#chartContainer3').hide();
+                    $('#chartContainer').show();
+
+                    var chart = new CanvasJS.Chart("chartContainer");
+
+                    chart.options.axisY = { title: "Total Stock Issued" };
+                    chart.options.title = { text: " Product Issued per Category" };
+                    chart.options.exportEnabled = true;
+                    chart.options.zoomEnabled = true;
+                    chart.options.animationEnabled = true;
+                    chart.options.theme = "light2";
+
+                    
+
+                    chart.options.data = [];
+                    var start = 0;
+                    var end = 0;
+                    start = yearf;
+                    end = yeart;
+                    var val = 0;
+
+                    for(i=start;i<=end;i++){
+                        var series1 = { //dataSeries - first quarter
+                        type: "column",
+                        name: ""+i+"",
+                        yValueFormatString: "#,##0",
+                        showInLegend: true
+                    };
+                        series1.dataPoints = data[val];
+                        chart.options.data.push(series1);
+                        val++;
+                    }
+                       
+                    chart.render();
+                
+            }else if(type=="Customize"){
+                $('#chartContainer3').show();
+                $('#chartContainer').hide();
+                fetchChart4();
+            }   
+               
 			}
 		});
+        
+    };
+
+
+    function fetchChart4(){
+        var year=$('#year').val();
+        var type=$('#type').val();
+        var yearf=$('#yearfrom').val();
+        var yeart=$('#yearto').val();
+        var datef=$('#datefrom').val();
+        var datet=$('#dateto').val();
+        $.ajax({
+                url:"fetch_single_chart2.php",
+                method:"POST",
+                data:{year:year,type:type,yearf:yearf,yeart:yeart,datef:datef,datet:datet},
+                dataType:"json",
+                success:function(data)
+                {
+                var chart = new CanvasJS.Chart("chartContainer3", {
+                        animationEnabled: true,
+                        theme: "light2",
+                        zoomEnabled: true,
+                        exportEnabled:true,
+                        title:{
+                            text: "Product Issued "
+                        },
+                        axisY: {
+                            title: "Total Stock Issued"
+                        },
+                        data: [{
+                            type: "column",
+                            indexLabelPlacement: "outside",
+                            yValueFormatString: "#,##0",
+                            dataPoints: data
+                        }]
+                    });
+                    chart.render();
+                }
+            });
     };
 
     $(document).on('change','#year',function(){

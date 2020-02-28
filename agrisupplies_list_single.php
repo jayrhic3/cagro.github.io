@@ -57,9 +57,9 @@ if(!isset($_SESSION['username'])){
                         <li><a href="dashboard.php"><i class="ti-home"></i>Dashboard</a></li>
                         <li><a href="secretary.php"><i class="ti-user"></i>Beneficiaries</a></li>
                         <li><a href="recent_request.php"><i class="ti-bell"></i>Requests</a></li>
-                        <li class="active"><a class="sidebar-sub-toggle"><i class="ti-panel"></i> Records <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <li><a class="sidebar-sub-toggle"><i class="ti-panel"></i> Records <span class="sidebar-collapse-icon ti-angle-down"></span></a>
                             <ul>
-                            <li class="active"><a href="planning_agrisupplies.php"><i class="ti-folder"></i>Agri Supplies</a></li>
+                            <li><a href="planning_agrisupplies.php"><i class="ti-folder"></i>Agri Supplies</a></li>
                             <li><a href="planning_technical_assistance.php"><i class="ti-folder"></i>Technical Assistance</a></li>
                             <li><a href="planning_farm_mechanization.php"><i class="ti-folder"></i>Farm Mechanization</a></li>
                             <li><a href="planning_other_assistance.php"><i class="ti-folder"></i>Other Assistance</a></li>
@@ -219,21 +219,22 @@ if(!isset($_SESSION['username'])){
                             <!-- /# column -->
                             <div class="col-md-12">
                                 <div class="card">
-                                <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="planning_agrisupplies.php" class="text-primary">Agi Supplies Requests List</a></li>
-                                            <li class="breadcrumb-item active"><a>Agi Supplies Requests - <?php echo $_SESSION['name']; ?></h4></a></li>
-                                        </ol>
-                                    </nav>
                                     <div class="card-body">
+                                    <h3>Agri Supplies Requests</h3><br>
                                         <div class="row">
-                                        <div class="col-md-12">
-                                        <h3>Agri Supplies Requests - <?php echo $_SESSION['name']; ?></h3>
-                                        <button type="button" id="close_button" class="btn btn-primary ti-back-left btn-sm float-right"> Back to Requests List</button>
+                                            <div class="col-md-3">
+                                                <h4><?php echo $_SESSION['name']; ?></h4><p>Request List</p>
+                                            </div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-3">
+                                                <div align="right">
+                                                    <button type="button" id="close_button" class="btn btn-secondary ti-back-left btn-sm"></button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        
+                                    
+                                       
                                         <div class="table-responsive">
-                                        <hr><br>
                                             <table id="user_data" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>

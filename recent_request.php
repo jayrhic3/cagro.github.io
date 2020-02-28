@@ -217,22 +217,17 @@ if(!isset($_SESSION['username'])){
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
-            
+                
                 <!-- /# row -->
 
                 <div class="row">
                             <!-- /# column -->
                             <div class="col-md-12">
                                 <div class="card">
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item active"><a>Requests List</a></li>
-                                        </ol>
-                                    </nav>
                                    <div class="card-body">
+                                   <h3>Requests</h3>
                                    <div class="row">
                                         <div class="col-lg-12"  id="ongoing_table">
-                                        <h3>Requests List</h3><hr><br>
                                             <div class="table-responsive">
                                                 <table id="user_data" class="table table-striped table-bordered">
                                                     <thead>

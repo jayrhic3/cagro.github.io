@@ -14,9 +14,9 @@ session_start();
 		$result = $statement->execute();
 		if(!empty($result))
 		{
-			echo 'Updated Succesfully!';
+			echo 'Succesfully Updated';
 		}else{
-			echo "Unsuccessful!";
+			echo "wrong";
 		}
 	
 ?>

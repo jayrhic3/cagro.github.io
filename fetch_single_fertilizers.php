@@ -13,6 +13,7 @@ if(isset($_POST["user_id"]))
         $output["product_name"] = $row["product_name"];
         $output["units"] = $row["units"];
         $output["quantity"] = $row["quantity"];
+        $output["xdate"] = $row["expiry_date"];
         $output["id"]=$row["id"];
 	}
 	echo json_encode($output);

@@ -176,7 +176,7 @@ else if($status!='All'&&$status_r=='Latest'&&$datefrom==''&&$dateto==''){
     $query .= 'SELECT t2.prod as product_name,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
     t2.stat as status,t2.d as id,t2.created as created_at,t2.word_created as dates from (select product_name as prod,units as unit,
     quantity as quan,despensed as despense,status as stat,id as d,created_at as created,word_created as word_created from 
-    inventory_all_products where status_updated="Latest" and type_product="'.$status.'") as t2 ';
+    inventory_all_products where status_updated="Latest" and product_name="'.$status.'") as t2 ';
 
 if(isset($_POST["search"]["value"]))
 {
@@ -230,7 +230,7 @@ else if($status!='All'&&$status_r=='Old'&&$datefrom==''&&$dateto==''){
     $query .= 'SELECT t2.prod as product_name,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
     t2.stat as status,t2.d as id,t2.created as created_at,t2.word_created as dates from (select product_name as prod,units as unit,
     quantity as quan,despensed as despense,status as stat,id as d,created_at as created,word_created as word_created from 
-    inventory_all_products where status_updated="Old" and type_product="'.$status.'") as t2 ';
+    inventory_all_products where status_updated="Old" and product_name="'.$status.'") as t2 ';
 
 if(isset($_POST["search"]["value"]))
 {
@@ -286,7 +286,7 @@ else if($status!='All'&&$status_r=='Summary'&&$datefrom==''&&$dateto==''){
 $query .= 'SELECT t2.prod as product_name,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
 t2.stat as status,t2.d as id,t2.created as created_at from (select product_name as prod,units as unit,
 sum(quantity) as quan,sum(despensed) as despense,status as stat,id as d,created_at as created from 
-inventory_all_products where type_product="'.$status.'" group by product_name,units) as t2 ';
+inventory_all_products where product_name="'.$status.'" group by product_name,units) as t2 ';
 
 if(isset($_POST["search"]["value"]))
 {
@@ -504,7 +504,7 @@ else if($status!='All'&&$status_r=='Latest'&&$datefrom!=''&&$dateto!=''){
     $query .= 'SELECT t2.prod as product_name,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
 t2.stat as status,t2.d as id,t2.created as created_at,t2.word_created as dates from (select product_name as prod,units as unit,
 quantity as quan,despensed as despense,status as stat,id as d,created_at as created,word_created as word_created from 
-inventory_all_products where type_product="'.$status.'" and status_updated="Latest" and DATE_FORMAT(created_at,"%Y-%m-%d") BETWEEN "'.$datefrom.'" AND "'.$dateto.'") as t2 ';
+inventory_all_products where product_name="'.$status.'" and status_updated="Latest" and DATE_FORMAT(created_at,"%Y-%m-%d") BETWEEN "'.$datefrom.'" AND "'.$dateto.'") as t2 ';
 
 if(isset($_POST["search"]["value"]))
 {
@@ -558,7 +558,7 @@ else if($status!='All'&&$status_r=='Old'&&$datefrom!=''&&$dateto!=''){
     $query .= 'SELECT t2.prod as product_name,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
 t2.stat as status,t2.d as id,t2.created as created_at,t2.word_created as dates from (select product_name as prod,units as unit,
 quantity as quan,despensed as despense,status as stat,id as d,created_at as created,word_created as word_created from 
-inventory_all_products where type_product="'.$status.'" and status_updated="Old" and DATE_FORMAT(created_at,"%Y-%m-%d") BETWEEN "'.$datefrom.'" AND "'.$dateto.'") as t2 ';
+inventory_all_products where product_name="'.$status.'" and status_updated="Old" and DATE_FORMAT(created_at,"%Y-%m-%d") BETWEEN "'.$datefrom.'" AND "'.$dateto.'") as t2 ';
 
 if(isset($_POST["search"]["value"]))
 {
@@ -614,7 +614,7 @@ if($status!='All'&&$status_r=='Summary'&&$datefrom!=''&&$dateto!=''){
     $query .= 'SELECT t2.prod as product_name,t2.unit as units,t2.quan as quantity,t2.despense as despensed,
     t2.stat as status,t2.d as id,t2.created as created_at from (select product_name as prod,units as unit,
     sum(quantity) as quan,sum(despensed) as despense,status as stat,id as d,created_at as created from 
-    inventory_all_products where type_product="'.$status.'" and DATE_FORMAT(created_at,"%Y-%m-%d") BETWEEN "'.$datefrom.'" AND "'.$dateto.'" group by product_name,units) as t2 ';
+    inventory_all_products where product_name="'.$status.'" and DATE_FORMAT(created_at,"%Y-%m-%d") BETWEEN "'.$datefrom.'" AND "'.$dateto.'" group by product_name,units) as t2 ';
 
 if(isset($_POST["search"]["value"]))
 {

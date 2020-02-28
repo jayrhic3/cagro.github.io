@@ -62,7 +62,7 @@ foreach($result as $row)
 
     <style>
         .back{
-            background:#343957;;
+            background:skyblue;
         }
         .year{
             margin-top:8px;
@@ -262,7 +262,7 @@ foreach($result as $row)
         <div class="main">
             <div class="container-fluid">
                 
-                            <form action="print_graph.php" method="post" target="_blank">
+                            <form action="print_graph2.php" method="post" target="_blank">
                             <div class="row">
                             <!-- /# column -->
                             <div class="col-md-12">
@@ -424,7 +424,7 @@ $(document).ready(function(){
         $('#time').html(momentNow.format('A hh:mm:ss'));
    },100);
 
-   $('#yearf').hide();
+    $('#yearf').hide();
     $('#yeart').hide();
     $('#yearni').show();
     $('#sear').hide();

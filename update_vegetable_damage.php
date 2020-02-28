@@ -23,7 +23,7 @@ include('connection.php');
                 $query4="UPDATE inventory_all_products set quantity='$dif' where id = '$id'";
                 $statement4=$connection->prepare($query4);
                 $statement4->execute();
-                echo 'Updated Succesfully!';
+                echo 'Succesfully Updated';
             }
             
         }

@@ -69,10 +69,10 @@ class myPDF extends FPDF{
        {
         $this->SetFont('Times','',10);
         $this->Cell(15,10,($count+=1).'.',1,0,'L');
-        $this->Cell(30,10,$row['lastname'],1,0,'L');
-        $this->Cell(30,10,$row['firstname'],1,0,'L');
-        $this->Cell(50,10,$row['ass'],1,0,'L');
-        $this->Cell(30,10,$row['stat'],1,0,'L');
+        $this->Cell(30,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+        $this->Cell(30,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
+        $this->Cell(50,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+        $this->Cell(30,10,ucfirst(strtolower($row['stat'])),1,0,'L');
         $this->Cell(40,10,$row['dates'],1,0,'L');
         $this->Ln();
        }
@@ -151,10 +151,10 @@ else if($name!='All' && $status=='All' && $datefrom=='' && $dateto==''){
            {
             $this->SetFont('Times','',10);
             $this->Cell(15,10,($count+=1).'.',1,0,'L');
-            $this->Cell(30,10,$row['lastname'],1,0,'L');
-            $this->Cell(30,10,$row['firstname'],1,0,'L');
-            $this->Cell(50,10,$row['ass'],1,0,'L');
-            $this->Cell(30,10,$row['stat'],1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
+            $this->Cell(50,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['stat'])),1,0,'L');
             $this->Cell(40,10,$row['dates'],1,0,'L');
             $this->Ln();
            }
@@ -232,10 +232,10 @@ else if($name=='All' && $status!='All' && $datefrom=='' && $dateto==''){
            {
             $this->SetFont('Times','',10);
             $this->Cell(15,10,($count+=1).'.',1,0,'L');
-            $this->Cell(30,10,$row['lastname'],1,0,'L');
-            $this->Cell(30,10,$row['firstname'],1,0,'L');
-            $this->Cell(50,10,$row['ass'],1,0,'L');
-            $this->Cell(30,10,$row['stat'],1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
+            $this->Cell(50,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['stat'])),1,0,'L');
             $this->Cell(40,10,$row['dates'],1,0,'L');
             $this->Ln();
            }
@@ -316,10 +316,10 @@ else if($name!='All' && $status!='All' && $datefrom=='' && $dateto==''){
            {
             $this->SetFont('Times','',10);
             $this->Cell(15,10,($count+=1).'.',1,0,'L');
-            $this->Cell(30,10,$row['lastname'],1,0,'L');
-            $this->Cell(30,10,$row['firstname'],1,0,'L');
-            $this->Cell(50,10,$row['ass'],1,0,'L');
-            $this->Cell(30,10,$row['stat'],1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
+            $this->Cell(50,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['stat'])),1,0,'L');
             $this->Cell(40,10,$row['dates'],1,0,'L');
             $this->Ln();
            }
@@ -402,10 +402,10 @@ else if($name=='All' && $status=='All' && $datefrom!='' && $dateto!=''){
            {
             $this->SetFont('Times','',10);
             $this->Cell(15,10,($count+=1).'.',1,0,'L');
-            $this->Cell(30,10,$row['lastname'],1,0,'L');
-            $this->Cell(30,10,$row['firstname'],1,0,'L');
-            $this->Cell(50,10,$row['ass'],1,0,'L');
-            $this->Cell(30,10,$row['stat'],1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
+            $this->Cell(50,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['stat'])),1,0,'L');
             $this->Cell(40,10,$row['dates'],1,0,'L');
             $this->Ln();
            }
@@ -489,10 +489,10 @@ else if($name!='All' && $status=='All' && $datefrom!='' && $dateto!=''){
            {
             $this->SetFont('Times','',10);
             $this->Cell(15,10,($count+=1).'.',1,0,'L');
-            $this->Cell(30,10,$row['lastname'],1,0,'L');
-            $this->Cell(30,10,$row['firstname'],1,0,'L');
-            $this->Cell(50,10,$row['ass'],1,0,'L');
-            $this->Cell(30,10,$row['stat'],1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
+            $this->Cell(50,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['stat'])),1,0,'L');
             $this->Cell(40,10,$row['dates'],1,0,'L');
             $this->Ln();
            }
@@ -576,10 +576,10 @@ else if($name=='All' && $status!='All' && $datefrom!='' && $dateto!=''){
            {
             $this->SetFont('Times','',10);
             $this->Cell(15,10,($count+=1).'.',1,0,'L');
-            $this->Cell(30,10,$row['lastname'],1,0,'L');
-            $this->Cell(30,10,$row['firstname'],1,0,'L');
-            $this->Cell(50,10,$row['ass'],1,0,'L');
-            $this->Cell(30,10,$row['stat'],1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
+            $this->Cell(50,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['stat'])),1,0,'L');
             $this->Cell(40,10,$row['dates'],1,0,'L');
             $this->Ln();
            }
@@ -663,10 +663,10 @@ else if($name!='All' && $status!='All' && $datefrom!='' && $dateto!=''){
            {
             $this->SetFont('Times','',10);
             $this->Cell(15,10,($count+=1).'.',1,0,'L');
-            $this->Cell(30,10,$row['lastname'],1,0,'L');
-            $this->Cell(30,10,$row['firstname'],1,0,'L');
-            $this->Cell(50,10,$row['ass'],1,0,'L');
-            $this->Cell(30,10,$row['stat'],1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['lastname'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['firstname'])),1,0,'L');
+            $this->Cell(50,10,ucfirst(strtolower($row['ass'])),1,0,'L');
+            $this->Cell(30,10,ucfirst(strtolower($row['stat'])),1,0,'L');
             $this->Cell(40,10,$row['dates'],1,0,'L');
             $this->Ln();
            }

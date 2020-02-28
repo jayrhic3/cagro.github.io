@@ -265,20 +265,26 @@ foreach($result as $row)
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label>Type of Products:</label>
+                                                        <label>Product Name:</label>
                                                         <select name="status" id="status" class="form-control">
                                                             <option value="All">All</option>
-                                                            <option value="Vegetables_Seedlings/Seeds">Vegetables_Seedlings/Seeds</option>
-                                                            <option value="Fruit_Trees_Seedlings">Fruit_Trees_Seedlings</option>
-                                                            <option value="Organic/Vermicast">Organic/Vermicast</option>
-                                                            <option value="Fertilizers">Fertilizers</option>
-                                                            <option value="Corn_Seeds">Corn_Seeds</option>
-                                                            <option value="Rice_Seeds">Rice_Seeds</option>
-                                                            <option value="Chemicals">Chemicals</option>
+                                                            <?php 
+
+                                                                $query2="SELECT * from inventory_all_products";
+
+                                                                $statement2 = $connection->prepare($query2);
+                                                                $statement2->execute();
+                                                                $result2 = $statement2->fetchAll();
+                                                                foreach($result2 as $row)
+                                                                {
+                                                                    echo '<option value="'.$row["product_name"].'">'.$row["product_name"].'</option>';
+                                                                }
+
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label>Status</label>
                                                         <select name="status_r" id="status_r" class="form-control">
@@ -303,7 +309,7 @@ foreach($result as $row)
                                                 <div class="col-md-1">
                                                     <button type="button" id="filter" class="btn btn-primary ti-search"></button>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-1">
                                                     <div align="right">
                                                         <button class="btn btn-warning ti-printer" id="print"> Print</button>
                                                     </div>

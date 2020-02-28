@@ -40,7 +40,7 @@ if(!isset($_SESSION['username'])){
 
     <style>
         .back{
-            background:#343957;
+            background:skyblue;
         }
         .year{
             margin-top:8px;
@@ -190,7 +190,7 @@ if(!isset($_SESSION['username'])){
                         
                         <div class="dropdown dib">
                             <div class="header-icon" data-toggle="dropdown">
-                                <span class="user-avatar">Hi <a id="lblGreetings"></a>, <?php echo $_SESSION["username"]; ?>
+                                <span class="user-avatar"><?php echo $_SESSION["username"]; ?>
                                     <i class="ti-angle-down f-s-10"></i>
                                 </span>
                                 <div class="drop-down dropdown-profile dropdown-menu dropdown-menu-right">
@@ -374,21 +374,6 @@ if(!isset($_SESSION['username'])){
 
 <script>
 $(document).ready(function(){ 
-
-    var myDate = new Date();
-    var hrs = myDate.getHours();
-
-    var greet;
-
-    if (hrs < 12)
-        greet = 'Good Morning';
-    else if (hrs >= 12 && hrs <= 17)
-        greet = 'Good Afternoon';
-    else if (hrs >= 17 && hrs <= 24)
-        greet = 'Good Evening';
-
-    document.getElementById('lblGreetings').innerHTML =
-        '<b>' + greet ;
 
    var interval=setInterval(function(){
         var momentNow=new moment();
